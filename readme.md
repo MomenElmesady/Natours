@@ -1,3 +1,3 @@
 # Natours
 natours app 
-secomed line 
+delete Line 
