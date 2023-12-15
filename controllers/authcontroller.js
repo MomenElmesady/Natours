@@ -62,8 +62,8 @@ exports.login = catchAsync(async (req, res, next) => {
 })
 
 exports.logout = (req,res)=>{
-    res.cookie("jwt", "EmptyOne",{
-        expired: new Date(Date.now()+10*1000),
+    res.cookie("jwt", false,{
+        expired: new Date(Date.now()+1),
         httpOnly: true 
     })
     res.status(200).json({
@@ -76,10 +76,14 @@ exports.protect = catchAsync(async (req, res, next) => {
     let token;
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         token = req.headers.authorization.split(" ")[1]
+        if (token === "false"){
+            token = false 
+        }
     }
     else if (req.cookies.jwt) {
         token = req.cookies.jwt
     }
+
 
     if (!token) {
         return next(new appError("Must be logged in!", 404))

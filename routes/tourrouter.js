@@ -24,7 +24,7 @@ Router.route("/tours-within/:distance/center/:latlng/unit/:unit").get(tourcontro
 Router.route('/distances/:latlng/unit/:unit').get(tourcontroller.getDistances);
 
 Router.route(`/`)
-  .get(tourcontroller.getAllTours)
+  .get(authcontroller.protect,tourcontroller.getAllTours)
   .post(authcontroller.protect,authcontroller.restrictTo("admin","lead-guide"), tourcontroller.createTour);
 
 Router.route(`/:id`).get(tourcontroller.getTour)
